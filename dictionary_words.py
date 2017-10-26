@@ -4,7 +4,7 @@ import time
 
 def create_sentence(num_of_words):
     '''Create a sentence given number of words in sentence'''
-    #Open dictionary
+    #Open corpus
     with open('american') as f:
         word_list = list(f)
     
@@ -14,8 +14,8 @@ def create_sentence(num_of_words):
         while word_ct < num_of_words:
             word_ct += 1
 
-            #Get random number and subract 1 to prevent out of bounds error
-            rand_int = random.randint(0, len(word_list)) - 1 
+            #Get random number within valid range
+            rand_int = random.randint(0, len(word_list)-1)
             random_word = word_list[rand_int]
 
             #lowercase and remove newlines from input
