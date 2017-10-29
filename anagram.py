@@ -6,7 +6,7 @@ import collections
 def create_anagram(word):
     with open("american") as f:
         word_list = list(f)
-        anagram_dict = dict()
+
         #hashy_dict = collections.defaultdict(list)
         #letter_hashy = set(collections.Counter())
 
@@ -14,13 +14,21 @@ def create_anagram(word):
         #     letter_hashy.add(c)
         # print(word_list[763])
         # print(letter_hashy)
-        cleaned_word = word_list[763].strip("\n")
 
-        charlist = collections.Counter(list(cleaned_word))
-        wordkey = ""
-        for ch in charlist.most_common():
-            wordkey += ch[0] + str(ch[1])
+        # use Default Dict to store words according to hash
+        anagram_words = collections.defaultdict(list)
 
+        for word in word_list:
+            cleaned_word = word.strip("\n")
+            #Create list of characters along with char count
+            charlist = collections.Counter(list(cleaned_word))
+            wordkey = ""
+            #go over characters in order by most common
+            #Add chars to wordkey
+            for ch in charlist.most_common():
+                wordkey += ch[0] + str(ch[1])
+
+            anagram_words[wordkey] = word
         print(wordkey)
 
 
