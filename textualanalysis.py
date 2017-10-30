@@ -34,16 +34,46 @@ def create_list_histogram(filename):
 
             #getting words in document
             for word in word_list:
-                pass
-                #Check if word has been encountered before
-                    #Add one to existing entry
-                #Else create new entry
+                #Get length of histogram array
+                index_len = len(histogram)
+
+                #sanitize data
+                word = sanitize(word)
+
+                #if first run add word to array
+                if(index_len == 0):
+                    histogram.append((word, 1))
+            
+                #else do this
+                else:
+                    index = 0
+                    #Iterate over histogram
+                    while index < index_len -1:
+                        
+                        #Check if word has been encountered before
+                        if histogram[index][0] == word:
+                            #Add one to existing entry
+                            histogram[index] = ( word, 1 + histogram[index][1] )
+                        
+                        #Else create new entry
+                        else:
+                            histogram.append((word, 1))
+
+                        #Move to next index
+                        index += 1
+        return histogram
 
 def create_tuple_list_histogram(filename):
     '''
         Create a histogram and return as a list of tuples
     '''
     pass
+
+def sanitize(word):
+    '''
+        Clean words and return *filtered* for content to remove
+    '''
+    return word
 
 if __name__ == "__main__":
     default_file_name = 'small_sample_text.txt'
