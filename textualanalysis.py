@@ -49,7 +49,6 @@ def create_tuple_list_histogram(filename):
                 #else do this
                 else:
                     index = 0
-                    
                     word_found = False
                     
                     #Iterate over histogram
@@ -80,6 +79,12 @@ def sanitize(word):
     '''
         Clean words and return *filtered* for content to remove
     '''
+    if word == "\n":
+        word = "*filtered*"
+    
+    word = word.strip(".,:\n").lower()
+   
+    
     return word
 
 if __name__ == "__main__":
@@ -90,4 +95,5 @@ if __name__ == "__main__":
     else:
         filename = default_file_name
 
-    print(create_tuple_list_histogram(filename))
+    histogram = create_tuple_list_histogram(filename)
+    print("{} number of words in text".format(len(histogram)))
