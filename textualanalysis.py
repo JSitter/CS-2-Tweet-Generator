@@ -83,4 +83,4 @@ if __name__ == "__main__":
     else:
         filename = default_file_name
 
-    print(create_histogram_dictionary(filename))
+    print(create_list_histogram(filename))
