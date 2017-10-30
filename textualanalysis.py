@@ -22,7 +22,7 @@ def create_histogram_dictionary(filename):
                     histogram[word] = 1
         return histogram
 
-def create_list_histogram(filename):
+def create_tuple_list_histogram(filename):
     '''
         Create a histogram in a list of lists
     '''
@@ -34,38 +34,45 @@ def create_list_histogram(filename):
 
             #getting words in document
             for word in word_list:
-                #Get length of histogram array
-                index_len = len(histogram)
+
 
                 #sanitize data
                 word = sanitize(word)
 
+                #Get length of histogram array
+                index_len = len(histogram)
+
                 #if first run add word to array
-                if(index_len == 0):
+                if(index_len < 1):
                     histogram.append((word, 1))
             
                 #else do this
                 else:
                     index = 0
+                    
+                    word_found = False
+                    
                     #Iterate over histogram
-                    while index < index_len -1:
+                    while index < index_len:
                         
                         #Check if word has been encountered before
                         if histogram[index][0] == word:
                             #Add one to existing entry
                             histogram[index] = ( word, 1 + histogram[index][1] )
-                        
-                        #Else create new entry
-                        else:
-                            histogram.append((word, 1))
+                            word_found = True
+                            break
 
                         #Move to next index
                         index += 1
+                                            
+                    #Check if word was found
+                    if not word_found:
+                        histogram.append((word, 1))
         return histogram
 
-def create_tuple_list_histogram(filename):
+def create_list_list_histogram(filename):
     '''
-        Create a histogram and return as a list of tuples
+        Create a histogram and return as a list of lists
     '''
     pass
 
@@ -83,4 +90,4 @@ if __name__ == "__main__":
     else:
         filename = default_file_name
 
-    print(create_list_histogram(filename))
+    print(create_tuple_list_histogram(filename))
