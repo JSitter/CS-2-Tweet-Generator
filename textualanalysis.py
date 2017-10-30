@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import time
 
 def create_histogram_dictionary(filename):
     '''
@@ -13,6 +14,7 @@ def create_histogram_dictionary(filename):
         for line in f.readlines():
             word_list = line.split(" ")
             for word in word_list:
+                word = sanitize(word)
                 #Check if word has been encountered before
                 if word in histogram:
                     #Add one to existing entry
@@ -94,6 +96,20 @@ if __name__ == "__main__":
         filename = sys.argv[1]
     else:
         filename = default_file_name
-
+    print("generating with tuple")
+    #Generate with Tuple
+    start_time = int(round(time.time()*1000))
     histogram = create_tuple_list_histogram(filename)
-    print("{} number of words in text".format(len(histogram)))
+    end_time = int(round(time.time()*1000))
+
+    print("{} number of words in tuple text".format(len(histogram)))
+    print("Report generated in {}ms".format(end_time-start_time))
+
+    print("generating with dictionary")
+    #Generate with Dictionary
+    start_time = int(round(time.time()*1000))
+    histogram = create_histogram_dictionary(filename)
+    end_time = int(round(time.time()*1000))
+
+    print("{} number of words in dictionary".format(len(histogram)))
+    print("Report generated in {}ms".format(end_time-start_time))
