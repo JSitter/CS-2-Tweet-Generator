@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import sys
 
-def stochastic_sample(filename, len):
+def stochastic_sample(filename, sentence_length):
     words = get_words_from_text(filename)
-
-    print(create_histogram(words))
+    #num_words = len(words)
+    create_histogram(words)
+    print(len(words))
 
 
 def create_histogram(word_list):
@@ -13,7 +14,6 @@ def create_histogram(word_list):
     '''
     histogram = {}
 
-    
     for word in word_list:
         word = sanitize(word)
         if word in histogram:
