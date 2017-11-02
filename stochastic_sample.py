@@ -1,8 +1,26 @@
 #!/usr/bin/env python3
 import sys
 
-def stochastic_sample(sample_text_filename, len):
-    print(get_words_from_text(sample_text_filename))
+def stochastic_sample(filename, len):
+    words = get_words_from_text(filename)
+
+    print(create_histogram(words))
+
+
+def create_histogram(word_list):
+    '''
+        Create Histogram of word frequency in file
+    '''
+    histogram = {}
+
+    
+    for word in word_list:
+        word = sanitize(word)
+        if word in histogram:
+            histogram[word] += 1
+        else:
+            histogram[word] = 1
+    return histogram
 
 def get_words_from_text(filename):
     '''
@@ -12,28 +30,6 @@ def get_words_from_text(filename):
         text = f.read()
 
     return text.split(" ")
-
-def create_histogram_dictionary(filename):
-    '''
-        Create Histogram of word frequency in file
-    '''
-    with open(filename) as f:
-        text_lines = list()
-        histogram = {}
-
-        #Get all words in file
-        for line in f.readlines():
-            word_list = line.split(" ")
-            for word in word_list:
-                word = sanitize(word)
-                #Check if word has been encountered before
-                if word in histogram:
-                    #Add one to existing entry
-                    histogram[word] += 1
-                else:
-                    #Else create new entry
-                    histogram[word] = 1
-        return histogram
         
 def sanitize(word):
     '''
@@ -59,4 +55,4 @@ if __name__ == "__main__":
     else:
         sentence_len = 5
 
-    print(stochastic_sample(filename, sentence_len))
+    stochastic_sample(filename, sentence_len)
