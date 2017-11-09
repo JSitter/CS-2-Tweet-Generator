@@ -5,27 +5,81 @@ import time
 
 class StochasticSample:
 
-    def __init__(self, filename, sentence_lenth):
-        self.sourceText = self.getWordsFromText(filename)
+    def __init__(self, filename, sentenceLength):
+        self.sourceText = self.getStringFromFile(filename)
+        self.sourceText = self.santizeText(self.sourceText)
+        self.wordList = self.createWordList(self.sourceText)
+        print("listogram", self.createListogram(self.wordList))
 
-    def createDictogram(self, word_list):
+    def createDictogram(self, wordList):
         '''
             Create Dictionary Histogram of word freqency
         '''
-        pass
-    
-    def getWordsFromText(self, filename):
+        histogram = {}
+
+        for word in wordList:
+            if word in histogram:
+                histogram[word] += 1
+            else:
+                histogram[word] = 1
+
+        return histogram
+
+    def createListogram(self, wordList):
         '''
-            Get words from Text File
+        Create a histogram and return as a list of lists
         '''
-        pass
+        histogram = list()
+        for word in wordList:
+            #Get length of histogram
+            histLen = len(histogram)
+
+            #if first run insert into histogram
+            if(histLen < 1):
+                histogram.append([word, 1])
+
+            #else run normally
+            else:
+                index = 0
+                wordFound = False
+                for element in histogram:
+                    print(element)
+                    #If word has been encountered before add to count
+                    if element[index] == word:
+                        histogram[index][1] += 1
+                        wordFound = True
+                        break
+                    index += 1
+                #Check if word was found
+                if not wordFound:
+                    histogram.append([word, 1]) 
+            return histogram  
+
+    def getStringFromFile(self, filename):
+        '''
+            Get string of words from Text File
+        '''
+        with open(filename) as f:
+            return f.read()
     
-    def santizeText(self, word_list):
+    def santizeText(self, sourceText):
         '''
             Santize words
         '''
-        pass
+        acceptedChars = set("'\nabcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        return ''.join(filter(acceptedChars.__contains__, sourceText)).replace("\n", " ").lower()
     
+    def createWordList(self, sourceText):
+        '''
+            Create list of words
+        '''
+        splitText = sourceText.split(" ")
+        #Remove any empty values
+        for item in splitText:
+            if item == "":
+                splitText.pop(splitText.index(item))
+        return splitText
+
 
 if __name__=="__main__":
     defaultFileName = "small_sample_text.txt"
@@ -33,14 +87,16 @@ if __name__=="__main__":
     if len(sys.argv) > 1:
         filename = sys.argv[1]
     else:
-        filename = default_file_name
+        filename = defaultFileName
     
     if len(sys.argv) > 2:
-        sentence_len = int(sys.argv[2])
+        sentenceLen = int(sys.argv[2])
     else:
-        sentence_len = 5
+        sentenceLen = 5
     start_time = int(round(time.time()*1000))
     #Run sampling here
+    sample = StochasticSample(defaultFileName, sentenceLen)
     
+    #print(sample.wordList)
     end_time = int(round(time.time()*1000))
     print("Ran in {}ms".format(end_time - start_time))
