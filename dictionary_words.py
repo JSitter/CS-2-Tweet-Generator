@@ -2,6 +2,9 @@ import sys
 import random
 import time
 
+def get_words_list(filename):
+    pass
+
 def create_sentence(num_of_words):
     '''Create a sentence given number of words in sentence'''
     #Open corpus
@@ -40,6 +43,6 @@ if __name__=="__main__":
     sentence = create_sentence(sentence_length)
     end_time = int(round(time.time()*1000))
 
-    print(sentence)
+    print("\n", sentence)
     print("\n{} word sentence generated in {}ms.".format(sentence_length, end_time-start_time))
     print("This product provided by Jaytria Industries - Where people become dolphins.")

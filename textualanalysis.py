@@ -2,6 +2,9 @@
 import sys
 import time
 
+def open_word_file(filename):
+    pass
+
 def create_histogram_dictionary(filename):
     '''
         Create Histogram of word frequency in file
@@ -132,6 +135,7 @@ if __name__ == "__main__":
     else:
         filename = default_file_name
     print("generating histogram with tuple")
+
     #Generate with Tuple
     start_time = int(round(time.time()*1000))
     histogram = create_tuple_list_histogram(filename)
@@ -141,10 +145,12 @@ if __name__ == "__main__":
     print("Histogram generated in {}ms".format(end_time-start_time))
 
     print("generating with dictionary")
+
     #Generate with Dictionary
     start_time = int(round(time.time()*1000))
     histogram = create_histogram_dictionary(filename)
     end_time = int(round(time.time()*1000))
+    print(histogram)
 
     print("{} words in dictionary".format(len(histogram)))
     print("Histogram generated in {}ms".format(end_time-start_time))

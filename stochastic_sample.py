@@ -2,6 +2,7 @@
 import sys
 from random import random
 import time
+import re
 
 def stochastic_sample(filename, sentence_length):
     words = get_words_from_text(filename)
@@ -25,7 +26,7 @@ def stochastic_sample(filename, sentence_length):
             if  random_number <= histogram[item]:
                 sentence = sentence + item + " "
                 break
-    print(sentence)
+    return sentence
 
  
 
@@ -59,7 +60,7 @@ def sanitize(word):
     if word == "\n":
         word = "*filtered*"
     
-    word = word.strip(". ,:\r\n\"\t!").lower()
+    word = word.strip(". ,:\r\n\"\t\!\?  ").lower()
     
     return word
 
@@ -76,6 +77,6 @@ if __name__ == "__main__":
     else:
         sentence_len = 5
     start_time = int(round(time.time()*1000))
-    stochastic_sample(filename, sentence_len)
+    print(stochastic_sample(filename, sentence_len))
     end_time = int(round(time.time()*1000))
     print("Ran in {}ms".format(end_time - start_time))
