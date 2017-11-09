@@ -5,22 +5,22 @@ import time
 
 class StochasticSample:
 
-    def __init__(filename, sentence_lenth):
-        self.sourceText = 
+    def __init__(self, filename, sentence_lenth):
+        self.sourceText = self.getWordsFromText(filename)
 
-    def createDictogram(word_list):
+    def createDictogram(self, word_list):
         '''
-            Create Histogram of word freqency
+            Create Dictionary Histogram of word freqency
         '''
         pass
     
-    def getWordsFromText(filename):
+    def getWordsFromText(self, filename):
         '''
             Get words from Text File
         '''
         pass
     
-    def santizeText(word_list):
+    def santizeText(self, word_list):
         '''
             Santize words
         '''
