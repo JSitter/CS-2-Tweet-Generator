@@ -8,7 +8,7 @@ class StochasticSample:
     def __init__(filename, sentence_lenth):
         self.sourceText = 
 
-    def createHistogram(word_list):
+    def createDictogram(word_list):
         '''
             Create Histogram of word freqency
         '''
