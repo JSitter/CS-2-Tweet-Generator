@@ -16,7 +16,6 @@ class StochasticSample:
             Create Dictionary Histogram of word freqency
         '''
         histogram = {}
-
         for word in wordList:
             if word in histogram:
                 histogram[word] += 1
@@ -29,23 +28,23 @@ class StochasticSample:
         '''
         Create a histogram and return as a list of lists
         '''
+        
         histogram = list()
         for word in wordList:
             #Get length of histogram
             histLen = len(histogram)
-
+            print(word)
             #if first run insert into histogram
             if(histLen < 1):
                 histogram.append([word, 1])
-
             #else run normally
             else:
                 index = 0
                 wordFound = False
                 for element in histogram:
-                    print(element)
+                    
                     #If word has been encountered before add to count
-                    if element[index] == word:
+                    if element[0] == word:
                         histogram[index][1] += 1
                         wordFound = True
                         break
@@ -53,7 +52,7 @@ class StochasticSample:
                 #Check if word was found
                 if not wordFound:
                     histogram.append([word, 1]) 
-            return histogram  
+        return histogram  
 
     def getStringFromFile(self, filename):
         '''
