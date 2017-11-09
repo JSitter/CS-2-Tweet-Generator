@@ -5,30 +5,30 @@ import time
 import re
 
 def stochastic_sample(filename, sentence_length):
+    '''
+        Creates a weighted random sampling of words with the same frequency as the original text.
+    '''
     words = get_words_from_text(filename)
     histogram = create_histogram(words)
     total_words = len(words)
     place_holder = 0
 
-    
-
+    #convert integer count in histogram to percentage of text word appears in
     for item in histogram:
         place_holder += histogram[item]/total_words
         histogram[item] = place_holder
         
     count = 0
-    sentence = ""
+    sample = ""
     for count in range(sentence_length):
         random_number = random()
         
         for item in histogram:
             
             if  random_number <= histogram[item]:
-                sentence = sentence + item + " "
+                sample = sample + item + " "
                 break
-    return sentence
-
- 
+    return sample
 
 def create_histogram(word_list):
     '''
