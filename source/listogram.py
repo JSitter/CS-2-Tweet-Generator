@@ -13,21 +13,51 @@ class Listogram(list):
         self.types = 0  # Count of distinct word types in this histogram
         self.tokens = 0  # Total count of all word tokens in this histogram
         # Count words in given list, if any
+        self.histogram = list()
         if word_list is not None:
             for word in word_list:
                 self.add_count(word)
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
-        # TODO: Increase word frequency by count
+
+        index = 0
+        wordFound = False
+        for element in self.histogram:
+            
+            #If word has been encountered before add to count
+            if element[0] == word:
+                self.histogram[index][1] += count
+                self.tokens += count
+                wordFound = True
+                break
+            index += 1
+        #Check if word was found
+        if not wordFound:
+            self.histogram.append([word, count])
+            self.tokens += count
+            self.types += 1
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
+        index = 0
+        for item in self.histogram:
+            #print("item",item)
+            if item[0] == word:
+                #print(self.histogram[index][1])
+                return self.histogram[index][1]
+            index += 1  
+        return 0
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
         # TODO: Check if word is in this histogram
+        index = 0
+        for item in self.histogram:
+            if item[0] == word:
+                return True
+        return False
 
     def _index(self, target):
         """Return the index of entry containing given target word if found in
@@ -39,7 +69,7 @@ def print_histogram(word_list):
     print('word list: {}'.format(word_list))
     # Create a listogram and display its contents
     histogram = Listogram(word_list)
-    print('listogram: {}'.format(histogram))
+    print('listogram: {}'.format(histogram.histogram))
     print('{} tokens, {} types'.format(histogram.tokens, histogram.types))
     for word in word_list[-2:]:
         freq = histogram.frequency(word)
