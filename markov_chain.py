@@ -113,7 +113,7 @@ if __name__=="__main__":
         settings["len"] = 5
     else:
         settings["filename"] = parameters[0]
-        settings["len"] = parameters[1]
+        settings["len"] = int(parameters[1])
     
     #corpus = fw.create_corpus(settings["filename"])
     corpus = fw.create_corpus(settings["filename"])
@@ -121,4 +121,4 @@ if __name__=="__main__":
     mc = markov_chain(corpus)
 
 
-    print(mc.create(5))
+    print(mc.create(settings["len"]))
