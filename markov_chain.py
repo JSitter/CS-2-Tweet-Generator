@@ -45,15 +45,15 @@ class markov_chain:
         #loop through corpus
         while index < len(self.corpus):
             #if word has been encountered add next word to histogram
-            if self.corpus[index] in markov_structure:
 
+            if self.corpus[index] in markov_structure:
+                
                 next_word_dict_hist = markov_structure[self.corpus[index]]
                 #check for last word and add first word if at end
-                print(index+1)
+
                 if index+1 == len(self.corpus):
                     #check if first word is in and add one if yes
-                    print("structure",markov_structure[self.corpus])
-                    if self.corpus[0] in markov_structure[self.corpus]:
+                    if self.corpus[0] in markov_structure[self.corpus[index]]:
                         markov_structure[self.corpus[index]][self.corpus[0]] += 1
                     else:
                         #add first word
