@@ -61,7 +61,7 @@ class StochasticSample:
         with open(filename) as f:
             return f.read()
     
-    def santizeText(self, sourceText):
+    def sanitizeText(self, sourceText):
         '''
             Santize words
         '''
