@@ -6,6 +6,6 @@ def test_probabilities():
 
     hist = sto.create_histogram(sample.split(" "))
     
-    
-    assert hist["blue"]/len(sample.split(" ")) ==
+    print(hist["blue"]/len(sample.split(" ")))
+    #assert hist["blue"]/len(sample.split(" ")) == False
 
