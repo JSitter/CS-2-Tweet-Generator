@@ -137,14 +137,43 @@ class LinkedList(object):
         if self.head is None:
             raise ValueError("Item not found: {}".format(item))
         
-        previous_object = None
-        current_position = self.head
+        previous_item = None
+        current_item = self.head
+        found = False
 
-        while current_position is not None:
-            
-            previous_position = current_position
-            current_position = current_position.next
-        raise ValueError("Item not found: {}".format(item))
+        #Iterate over entire list to find matching item
+        while current_item is not None and not found:
+            #If current_item matches then determine what to do
+            if current_item.data == item:
+                
+                #Check if current item is at the head
+                if current_item == self.head:
+                    #If only one item in list remove item
+                    if current_item.next is None:
+                        self.head = None
+                        self.tail = None
+                        found = True
+                    else:
+                        self.head = current_item.next
+                        found = True
+                
+                #Check if list item is at Tail
+                elif current_item == self.tail:
+                    previous_item.next = None
+                    self.tail = previous_item
+                    found = True
+                
+                #Else remove from middle
+                else:
+                    previous_item.next = current_item.next
+                    found = True
+
+            #else iterate to next item in list
+            previous_item = current_item
+            current_item = current_item.next
+        if not found:
+            #List iteration finished without finding match
+            raise ValueError("Item not found: {}".format(item))
 
 
     def printList(self):
