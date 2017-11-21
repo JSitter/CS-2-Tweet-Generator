@@ -139,7 +139,7 @@ class LinkedList(object):
         
         previous_position = None
         current_position = self.head
-        self.printList()
+
         while current_position is not None:
             if current_position.data == item:
                 if previous_position is not None:
