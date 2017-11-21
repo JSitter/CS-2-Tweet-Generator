@@ -137,44 +137,11 @@ class LinkedList(object):
         if self.head is None:
             raise ValueError("Item not found: {}".format(item))
         
-        previous_position = None
+        previous_object = None
         current_position = self.head
 
         while current_position is not None:
-            if current_position.data == item:
-                if previous_position is not None:
-                    
-                    if current_position == self.tail:
-                        previous_position.next = None
-                        previous_position = self.tail
-                    else:
-                        previous_position.next = current_position.next
-                    return 0 
-                elif previous_position is None and current_position.next is None:
-                    #only one item in list
-                    self.head = None
-                    self.tail = None
-                    return 0
-                elif previous_position == self.head:
-                    #delete tail in two item list
-                    self.head = current_position
-                    return 0
-                elif current_position.next == self.tail:
-                    #delete head from two item list
-                    self.head = self.tail
-                    self.head.next=None
-                    return 0
-                elif current_position.next is None:
-                    #at tail
-                    print(current_position.data)
-                    print(item)
-                    print(previous_position)
-                    previous_position.next = None
-                    self.tail = previous_position
-                    return 0
-                else:
-                    self.head = current_position.next
-                    return 0
+            
             previous_position = current_position
             current_position = current_position.next
         raise ValueError("Item not found: {}".format(item))
