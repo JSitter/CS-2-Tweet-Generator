@@ -42,9 +42,9 @@ class LinkedList(object):
         node = self.head  # O(1) time to assign new variable
         # Loop until node is None, which is one node too far past tail
         while node is not None:  # Always n iterations because no early return
-            items.append(node.data)  # O(1) time (on average) to append to list
+            items.append(node.data)  # O(n) time (on average) to append to list
             # Skip to next node to advance forward in linked list
-            node = node.next  # O(1) time to reassign variable
+            node = node.next  # O(n) time to reassign variable
         # Now list contains items from all nodes
         return items  # O(1) time to return list
 
@@ -54,7 +54,10 @@ class LinkedList(object):
 
     def length(self):
         """Return the length of this linked list by traversing its nodes.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(n) 
+        each item  is touched only once unless there is nothing in list in which case
+        running time is O(1)
+        """
         end = False
         length = 0
         current_position = None
@@ -75,9 +78,7 @@ class LinkedList(object):
             else:
                 end = True
 
-        return length
-
-        
+        return length  
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -125,6 +126,62 @@ class LinkedList(object):
 
         return None
             
+    def replace(self, search_key, new_tuple):
+        '''Replace old data with new data'''
+        if self.head is None:
+            raise ValueError("Item not found: {}".format(item))
+
+        current_node = self.head
+
+        while current_node is not None:
+            if search_key == current_node.data[0]:
+                current_node.data = new_tuple
+                return current_node.data
+            current_node = current_node.next
+
+        
+
+    def delete_tuple(self, search_key):
+        if self.head is None:
+            raise ValueError("Item not found: {}".format(item))
+        
+        previous_item = None
+        current_item = self.head
+        found = False
+
+        #Iterate over entire list to find matching item
+        while current_item is not None and not found:
+            #If current_item matches then determine what to do
+            if current_item.data[0] == search_key:
+                
+                #Check if current item is at the head
+                if current_item == self.head:
+                    #If only one item in list remove item
+                    if current_item.next is None:
+                        self.head = None
+                        self.tail = None
+                        found = True
+                    else:
+                        self.head = current_item.next
+                        found = True
+                
+                #Check if list item is at Tail
+                elif current_item == self.tail:
+                    previous_item.next = None
+                    self.tail = previous_item
+                    found = True
+                
+                #Else remove from middle
+                else:
+                    previous_item.next = current_item.next
+                    found = True
+
+            #else iterate to next item in list
+            previous_item = current_item
+            current_item = current_item.next
+        if not found:
+            #List iteration finished without finding match
+            raise ValueError("Item not found: {}".format(item))
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
