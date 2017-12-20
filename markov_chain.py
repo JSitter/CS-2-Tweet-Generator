@@ -93,15 +93,13 @@ class markov_chain:
 
         return histogram    
 
-
 if __name__=="__main__":
 
     import sys
     import file_wrangler as fw
     settings = {}
     parameters = sys.argv[1:]
-
-    
+   
     #No parameters passed in
     if len(parameters) == 0:
         settings["filename"] = "small_sample_text.txt"
@@ -119,6 +117,5 @@ if __name__=="__main__":
     corpus = fw.create_corpus(settings["filename"])
 
     mc = markov_chain(corpus)
-
 
     print(mc.create(settings["len"]))
