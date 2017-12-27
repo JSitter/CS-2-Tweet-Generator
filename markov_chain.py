@@ -161,6 +161,7 @@ if __name__=="__main__":
     start_time = int(round(time.time()*1000))
     sentence = markov_chain.walk(settings["len"])
     end_time = int(round(time.time()*1000))
-    print("\nGenerated: {} in {}ms.".format(sentence, end_time-start_time))
+    print("\nGenerated sentence in {}ms.".format(end_time-start_time))
 
+    print(sentence)
 
