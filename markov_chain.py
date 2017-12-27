@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import random
 import time
+import pprint
+
 
 class MarkovChain:
 
@@ -9,7 +11,7 @@ class MarkovChain:
             TODO: Create Nth Order Chain
             TODO: Create 2nd Order chain first
         '''
-        self.types = 0
+
         self.markov_structure = self.generate_second_order_markov_structure(corpus)
         # sentence = []
         # #Choose first word randomly
@@ -64,65 +66,57 @@ class MarkovChain:
         markov_structure = {}
         corpus_length = len(corpus)
         
+        #Corpus too small for 2nd order chain -- return error
         if corpus_length < 3:
             return 1
 
         following_token_position = 1
-        for word in corpus:
+
+        for token in corpus:
 
             #if not at end of corpus
             if following_token_position < corpus_length:
                 second_token = corpus[following_token_position]
 
                 #look in markov structure for first token in digram
-                if word in markov_structure:
+                if token in markov_structure:
                 
-                    second_hist = markov_structure[word]
+                    second_hist = markov_structure[token]
                     
+                    self.add_to_histogram(second_token, second_hist)
 
+                    if second_token not in markov_structure:
+                        markov_structure[second_token] = []
 
-                    if second_token in second_hist:
-                        #add one to count
-                        second_hist[second_token] += 1
-                    #else create new item
-                    else:
-                        second_hist[second_token] = 1
                 else:
-                    #if not in structure add next word to hist list
-                    markov_structure[word] = [(second_token: 1)]
-                    self.types += 1
+                    #if token not in markov structure add it
+                    markov_structure[token] = [(second_token, 1)]
+
+                    if second_token not in markov_structure:
+                        markov_structure[second_token] = []
+
                 following_token_position += 1
         
         return markov_structure
 
-    def add_to_list_hist(word, histogram = []):
-        found = false
-
-        if len(histogram) == 0:
-            
-
-    def add_to_hist(word, histogram = []):
-        found = false
+    def add_to_histogram(self, word, histogram):
+        found = False
         index = 0
-        if len(histogram) > 0:
-            #If type exists check for following token in histogram
-            for item in histogram:
-                #word already exists in histogram
-                if item[0] == word:
-                    new_item = (item[0], item[1]+1)
-                    histogram[index] = new_item
-                    found = True
-            
-                index += 1
-            #Item not found in histogram
-            new_item = (word, 1)
-            histogram.append(new_item)
+        if len(histogram) == 0:
+            histogram.append((word, 1))
 
-        #Histogram does not exist
-        else:   
-            histogram = [(word, 1)]
-
+        for value in histogram:
+            if value[0] == word:
+                found = True
+                new_value = (word, value[1] + 1)
+                histogram[index] = new_value
+            index += 1
+        
+        if not found:
+            histogram.append((word, 1))
+        
         return histogram
+            
 
         # index = 0
         # #loop through corpus
@@ -161,20 +155,7 @@ class MarkovChain:
         #             markov_structure[self.corpus[index]] = {self.corpus[index+1]: 1}
             
         #     index += 1
-        # return markov_structure
-
-    def createHistogram(self, wordList):
-        '''
-            Create Dictionary Histogram of word freqency
-        '''
-        histogram = {}
-        for word in wordList:
-            if word in histogram:
-                histogram[word] += 1
-            else:
-                histogram[word] = 1
-
-        return histogram    
+        # return markov_structure  
 
 if __name__=="__main__":
 
@@ -215,14 +196,15 @@ if __name__=="__main__":
     start_time = int(round(time.time()*1000))
     corpus = fw.create_corpus(settings["filename"])
     end_time = int(round(time.time()*1000))
-    print("\nfinished in {}ms.".format(end_time-start_time))
+    print("\nFinished in {}ms.".format(end_time-start_time))
     
     print("Creating Markov Chain...")
     start_time = int(round(time.time()))
     #Create markovchain datastructure in memory
     markov_chain = MarkovChain(corpus) 
     end_time = int(round(time.time()))
-    print("\nChain generated in {}s.".format(end_time-start_time))
+    print("\nMarkov chain generated in {}s.".format(end_time-start_time))
+    
 
     start_time = int(round(time.time()*1000))
     sentence = markov_chain.walk(settings["len"])
