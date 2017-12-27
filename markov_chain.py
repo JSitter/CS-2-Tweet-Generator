@@ -32,15 +32,18 @@ class MarkovChain:
             TODO: Return N step random walk
         '''
         #take first step
-        markov_keys = self.markov_structure.keys()
+        markov_keys = list(self.markov_structure.keys())
+
         #get random first token
-        word = markov_keys[random.randint(0, len(markov_keys))]
+        word = markov_keys[random.randint(0, len(markov_keys)-1)]
         sentence = word
 
         #take additional steps
         for _ in range(1,steps):
             second_hist = self.markov_structure[word]
-            word = stochastic_sample(second_hist)
+            word = self.stochastic_sample(second_hist)
+            if not word:
+                word = "end token"
             sentence = sentence + " " + word
         
         return sentence
@@ -53,12 +56,15 @@ class MarkovChain:
         '''
         random_value = random.random()
         word_prob = 0
-        for word in histogram:
-            word_prob += histogram[word]/len(histogram)
- 
-            if random_value <= word_prob:
+        if len(histogram) > 0:
+            for type_tuple in histogram:
+                word_prob += type_tuple[1]/len(histogram)
+    
+                if random_value <= word_prob:
 
-                return word
+                    return type_tuple[0]
+        else:
+            return False
 
     def generate_second_order_markov_structure(self, corpus):
        
@@ -204,8 +210,8 @@ if __name__=="__main__":
     markov_chain = MarkovChain(corpus) 
     end_time = int(round(time.time()))
     print("\nMarkov chain generated in {}s.".format(end_time-start_time))
-    
 
+    print(markov_chain.markov_structure["fish"])
     start_time = int(round(time.time()*1000))
     sentence = markov_chain.walk(settings["len"])
     end_time = int(round(time.time()*1000))
