@@ -43,7 +43,7 @@ class MarkovChain:
             second_hist = self.markov_structure[word]
             word = self.stochastic_sample(second_hist)
             if not word:
-                word = "end token"
+                word = markov_keys[random.randint(0, len(markov_keys)-1)]
             sentence = sentence + " " + word
         
         return sentence
