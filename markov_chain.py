@@ -13,19 +13,6 @@ class MarkovChain:
         '''
 
         self.markov_structure = self.generate_second_order_markov_structure(corpus)
-        # sentence = []
-        # #Choose first word randomly
-        # rand_int = random.randrange(len(self.corpus))
-        # sentence.append(self.corpus[rand_int])
-
-        # while len(sentence) < sentence_len:
-        #     wrd_hist = markov_structure[sentence[-1]]
-        #     new_word = self.stochastic_sample(wrd_hist)
-
-        #     sentence.append(new_word)
-        # sentence_string =  " ".join(sentence)
-        # sentence_string = sentence_string[0].capitalize() + sentence_string[1:] + "."
-        # return sentence_string
 
     def walk(self, steps):
         '''
@@ -122,46 +109,6 @@ class MarkovChain:
             histogram.append((word, 1))
         
         return histogram
-            
-
-        # index = 0
-        # #loop through corpus
-        # while index < len(self.corpus):
-        #     #if word has been encountered add next word to histogram
-
-        #     if self.corpus[index] in markov_structure:
-                
-        #         next_word_dict_hist = markov_structure[self.corpus[index]]
-        #         #check for last word and add first word if at end
-
-        #         if index+1 == len(self.corpus):
-        #             #check if first word is in and add one if yes
-        #             if self.corpus[0] in markov_structure[self.corpus[index]]:
-        #                 markov_structure[self.corpus[index]][self.corpus[0]] += 1
-        #             else:
-        #                 #add first word
-        #                 markov_structure[self.corpus[index]][self.corpus[0]] = 1
-
-        #         #not at end add next word to histogram
-        #         else:
-        #             #if next word has been encountered add one to histogram counter
-        #             if  self.corpus[index+1] in markov_structure[self.corpus[index]]:
-        #                 markov_structure[self.corpus[index]][self.corpus[index+1]]+=1
-        #             #else add word to histogram
-        #             else:
-        #                 markov_structure[self.corpus[index]][self.corpus[index+1]] = 1
-                        
-        #     #else insert into histogram
-        #     else:
-        #         #if on last word add first word to histogram
-        #         if index+1 == len(self.corpus):
-        #             markov_structure[self.corpus[index]] = {self.corpus[0]:1}
-        #         #else add next word to histogram
-        #         else:
-        #             markov_structure[self.corpus[index]] = {self.corpus[index+1]: 1}
-            
-        #     index += 1
-        # return markov_structure  
 
 if __name__=="__main__":
 
@@ -211,7 +158,6 @@ if __name__=="__main__":
     end_time = int(round(time.time()))
     print("\nMarkov chain generated in {}s.".format(end_time-start_time))
 
-    print(markov_chain.markov_structure["fish"])
     start_time = int(round(time.time()*1000))
     sentence = markov_chain.walk(settings["len"])
     end_time = int(round(time.time()*1000))
